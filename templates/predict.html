@@ -1,0 +1,85 @@
+<!-- predict.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Price Prediction</h1>
+        <form id="predictionForm">
+            <label for="location">Location:</label><br>
+            <input type="text" id="location" name="location"><br>
+            <label for="sqft">Square Feet:</label><br>
+            <input type="number" id="sqft" name="sqft"><br>
+            <label for="bhk">BHK:</label><br>
+            <input type="number" id="bhk" name="bhk"><br>
+            <label for="bath">Bathrooms:</label><br>
+            <input type="number" id="bath" name="bath"><br><br>
+            <input type="submit" value="Predict">
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById("predictionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch("/estimate_price", {
+                method: "POST",
+                body: JSON.stringify({
+                    location: formData.get("location"),
+                    sqft: formData.get("sqft"),
+                    bhk: formData.get("bhk"),
+                    bath: formData.get("bath")
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML = "Estimated Price: " + data.estimated_price;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

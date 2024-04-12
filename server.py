@@ -7,27 +7,32 @@ import pickle
 app = Flask(__name__)
 
 # Load model and location data during startup
-with open("data/column.json", 'r') as f:
+with open("data/columns.json", 'r') as f:
     location_data = json.load(f)
 
-with open("data/bhpp.pickle", 'rb') as f:
+with open("data/banglore_9.pickle", 'rb') as f:
     model = pickle.load(f)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST','GET'])
+@app.route('/predict', methods=['POST'])
 def estimate_price():
-    data = request.get_json()
+    data = request.form
     location = data['location']
-    sqft = data['sqft']
-    bhk = data['bhk']
-    bath = data['bath']
+    print('Location: ',location)
+    sqft = float(data['sqft'])
+    print('Sqft: ',sqft)
+    bhk = int(data['bhk'])
+    print('BHK: ',bhk)
+    bath = int(data['bath'])
+    print('Bath: ',bath)
 
+    # Check if location exists in the location_data dictionary
     try:
-        loc_index = location_data.index(location.lower())
-    except ValueError:
+        loc_index = location_data[location.lower()]  # Get the index from the dictionary
+    except KeyError:
         return jsonify({'error': 'Invalid location'}), 400
 
     input_features = np.zeros(len(location_data))

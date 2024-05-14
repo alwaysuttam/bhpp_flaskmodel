@@ -4,33 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>House Price Estimation</title>
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #888; /* Gray color for font */
+        }
+
+        p {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fdbbbb; /* Custom color for font */
+        }
+
+        .location-name {
+            color: #333; /* Color for location name */
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-semibold text-center mb-8">Bengaluru House Price Estimation</h1>
-        <form action="/predict" method="post" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <div class="col-span-1">
-                <label for="location" class="block mb-1">Location:</label>
-                <input type="text" class="form-input w-full" id="location" name="location" required>
-            </div>
-            <div class="col-span-1">
-                <label for="sqft" class="block mb-1">Square Feet:</label>
-                <input type="number" class="form-input w-full" id="sqft" name="sqft" required>
-            </div>
-            <div class="col-span-1">
-                <label for="bhk" class="block mb-1">BHK:</label>
-                <input type="number" class="form-input w-full" id="bhk" name="bhk" required>
-            </div>
-            <div class="col-span-1">
-                <label for="bath" class="block mb-1">Bathrooms:</label>
-                <input type="number" class="form-input w-full" id="bath" name="bath" required>
-            </div>
-            <div class="col-span-full text-center">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300">Predict Price</button>
-            </div>
+<body>
+    <div class="container">
+        <h1> Bengaluru House Price Estimation</h1>
+        <form action="/predict" method="post">
+            <label for="location">Location:</label>
+            <select id="location" name="location">
+                {% for location in locations %}
+                <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+            </select><br><br>
+            <label for="sqft">Square Feet:</label>
+            <select id="sqft" name="sqft">
+                {% for sqft in range(600, 2001, 100) %}
+                <option value="{{ sqft }}">{{ sqft }}</option>
+                {% endfor %}
+            </select><br><br>
+            <label for="bhk">BHK:</label>
+            <select id="bhk" name="bhk">
+                {% for bhk in range(1, 6) %}
+                <option value="{{ bhk }}">{{ bhk }}</option>
+                {% endfor %}
+            </select><br><br>
+            <label for="bath">Bathrooms:</label>
+            <select id="bath" name="bath">
+                {% for bath in range(1, 4) %}
+                <option value="{{ bath }}">{{ bath }}</option>
+                {% endfor %}
+            </select><br><br>
+            <button type="submit">Predict Price</button>
         </form>
+
+        {% if predicted_price %}
+        <h2> The Predicted Price is  {{ predicted_price }} Lakhs </h2>
+        
+        {% endif %}
     </div>
 </body>
 </html>

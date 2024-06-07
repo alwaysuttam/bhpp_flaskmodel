@@ -1,4 +1,4 @@
-              #  Bengaluru House Price Prediction Web Application
+              #Bengaluru House Price Prediction Web Application
 
 
 This web application estimates the price of a house based on various parameters such as location, square footage (sqft), number of bedrooms (BHK), and number of bathrooms (bath). The model is pre-trained and the application serves predictions using this model.

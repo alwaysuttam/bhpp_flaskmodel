@@ -1,9 +1,9 @@
-              ## **Bengaluru House Price Prediction Web Application**
+              # Bengaluru House Price Prediction Web Application
 
 
 This web application estimates the price of a house based on various parameters such as location, square footage (sqft), number of bedrooms (BHK), and number of bathrooms (bath). The model is pre-trained and the application serves predictions using this model.
 
-                ##  **Project Structure**
+                ##  Project Structure
 
 app.py: The main Flask application script.
 
@@ -14,7 +14,8 @@ data/: Directory containing necessary data files.
        columns.json: JSON file containing the data columns used by the model.
        bhpp.pickle: Pickle file containing the trained model.
 
-              ## **Setup Instructions**
+              ## Setup Instructions
+              
 **Prerequisites**
 Python 
 Flask

@@ -25,7 +25,8 @@ Scikit-learn
 
 **Installation**
 
-Clone the repository or download the project files.
+Clone the repository. useing the following command to clone the repository
+https://github.com/uttam-bn/bhpp_flaskmodel.git
 
 Ensure you have Python installed on your machine.
 
@@ -33,7 +34,9 @@ Install the necessary Python packages using pip:
 
 
 pip install flask numpy scikit-learn
+
 Running the Application
+
 Navigate to the project directory.
 
 Run the Flask application:
